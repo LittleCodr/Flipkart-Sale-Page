@@ -1230,58 +1230,77 @@ p, .paragraph {
     </button>
 </div>
 </vue-modal>
-<vue-modal :open="showSuccessModal">
-<img src="/assets/JGrqbbA.png" style="width: 180px;">
-<h1 class="heading heading--h1">🎉 Congratulations! 🎉</h1>
-<h3 class="heading heading--h1">You Won: Apple iPhone 16 - 256GB!</h3>
-
-<div id="claimSteps" style="text-align: left; margin: 20px 0;">
-<p class="paragraph" style="font-weight: bold; color: #FF6600; margin-bottom: 15px;">
-📋 Complete these steps to claim your prize:
-</p>
-
-<div class="claim-step" id="step1">
-<p class="paragraph">
-<span class="step-number">1️⃣</span> <strong>Share on WhatsApp</strong> (Required)
-<br><small>Share this amazing offer with 5 friends on WhatsApp</small>
-</p>
-<button class="button" onclick="shareOnWhatsApp()" id="whatsappBtn" style="margin: 10px 0; background: #25D366;">
-📱 Share on WhatsApp
-</button>
-<span class="step-status" id="whatsappStatus">❌ Not completed</span>
+<!-- Final Success Modal -->
+<vue-modal :open="showFinalSuccess">
+<div style="text-align: center; padding: 30px;">
+    <!-- Success Animation -->
+    <div style="margin-bottom: 30px;">
+        <svg width="120" height="120" viewBox="0 0 100 100" style="animation: bounce 2s infinite;">
+            <circle cx="50" cy="50" r="45" fill="#28A745" stroke="#20C997" stroke-width="3"/>
+            <path d="M25 50 L40 65 L75 30" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    
+    <!-- Success Message -->
+    <div style="background: linear-gradient(145deg, #28A745, #20C997); color: white; padding: 20px; border-radius: 20px; margin-bottom: 30px;">
+        <h1 style="margin: 0 0 15px 0; font-size: 28px;">🎉 Congratulations!</h1>
+        <h2 style="margin: 0 0 10px 0; font-size: 22px;">Your iPhone 16 Pro Max is Confirmed!</h2>
+        <p style="margin: 0; font-size: 16px; opacity: 0.9;">Order processing has begun successfully</p>
+    </div>
+    
+    <!-- Delivery Information -->
+    <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid #FFD700; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+            <svg width="40" height="40" viewBox="0 0 100 100" style="margin-right: 15px;">
+                <rect x="10" y="40" width="80" height="40" fill="#FFD700" rx="5"/>
+                <rect x="15" y="45" width="70" height="30" fill="white" rx="3"/>
+                <circle cx="25" cy="85" r="8" fill="#333"/>
+                <circle cx="75" cy="85" r="8" fill="#333"/>
+                <text x="50" y="62" font-family="Arial" font-size="8" fill="#FFD700" text-anchor="middle" font-weight="bold">EXPRESS</text>
+            </svg>
+            <div style="text-align: left;">
+                <h3 style="margin: 0; color: #856404; font-size: 18px;">📦 Delivery Status</h3>
+                <p style="margin: 0; color: #666; font-size: 14px;">Processing & Packaging</p>
+            </div>
+        </div>
+        
+        <div style="text-align: left; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; margin: 8px 0;">
+                <span style="color: #28A745; margin-right: 10px;">✅</span>
+                <span style="color: #333;">Order Confirmed & Payment Verified</span>
+            </div>
+            <div style="display: flex; align-items: center; margin: 8px 0;">
+                <span style="color: #FFC107; margin-right: 10px;">⏳</span>
+                <span style="color: #333;">Packaging in Progress</span>
+            </div>
+            <div style="display: flex; align-items: center; margin: 8px 0;">
+                <span style="color: #6C757D; margin-right: 10px;">📅</span>
+                <span style="color: #333;">Expected Delivery: 3-5 Business Days</span>
+            </div>
+        </div>
+        
+        <div style="background: rgba(40, 167, 69, 0.1); border-radius: 10px; padding: 15px;">
+            <p style="margin: 0; color: #28A745; font-size: 14px; font-weight: bold; text-align: center;">
+                📞 You will receive a confirmation call within 24 hours!
+            </p>
+        </div>
+    </div>
+    
+    <!-- Prize Details -->
+    <div style="background: rgba(102, 126, 234, 0.1); border: 2px solid #667eea; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+        <h3 style="margin: 0 0 15px 0; color: #667eea; font-size: 18px;">🏆 Your Prize Details</h3>
+        <div style="text-align: left;">
+            <p style="margin: 5px 0; color: #333;"><strong>Product:</strong> Apple iPhone 16 Pro Max - 256GB</p>
+            <p style="margin: 5px 0; color: #333;"><strong>Color:</strong> Natural Titanium</p>
+            <p style="margin: 5px 0; color: #333;"><strong>Value:</strong> ₹1,29,900</p>
+            <p style="margin: 5px 0; color: #333;"><strong>Warranty:</strong> 1 Year Apple Warranty</p>
+        </div>
+    </div>
+    
+    <button @click="showFinalSuccess = false" style="background: linear-gradient(145deg, #667eea, #764ba2); color: white; border: none; padding: 15px 30px; border-radius: 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);">
+        🎉 Awesome! Close
+    </button>
 </div>
-
-<div class="claim-step" id="step2" style="opacity: 0.5;">
-<p class="paragraph">
-<span class="step-number">2️⃣</span> <strong>Follow on Social Media</strong> (Required)
-<br><small>Follow our official pages for updates</small>
-</p>
-<button class="button" onclick="followSocial()" id="socialBtn" style="margin: 10px 0; background: #1DA1F2;" disabled>
-👥 Follow Us
-</button>
-<span class="step-status" id="socialStatus">❌ Not completed</span>
-</div>
-
-<div class="claim-step" id="step3" style="opacity: 0.5;">
-<p class="paragraph">
-<span class="step-number">3️⃣</span> <strong>Verify Your Details</strong> (Final Step)
-<br><small>Enter your details to receive the prize</small>
-</p>
-<button class="button" onclick="verifyDetails()" id="verifyBtn" style="margin: 10px 0; background: #28A745;" disabled>
-✅ Verify & Claim
-</button>
-<span class="step-status" id="verifyStatus">❌ Not completed</span>
-</div>
-</div>
-
-<div id="completionMessage" style="display: none; background: linear-gradient(145deg, #28A745, #20C997); color: white; padding: 15px; border-radius: 10px; margin: 15px 0;">
-<h4>🎊 All Steps Completed!</h4>
-<p>Your prize claim has been submitted. You will receive a confirmation call within 24 hours!</p>
-</div>
-
-<button class="button" onclick="closeSuccessModal()" style="background: #6C757D; margin-top: 15px;">
-Close
-</button>
 </vue-modal>
 <div class="left">
 <div class="product-preview">
@@ -1933,7 +1952,32 @@ const app = new Vue({
         
         completeChallenge() {
             this.showWhatsAppChallenge = false;
-            this.showSuccessModal = true;
+            this.showShippingForm = true;
+        },
+        
+        submitShippingForm() {
+            // Simulate form submission (no actual data is sent)
+            console.log('Shipping form submitted (dummy):', this.shippingData);
+            
+            // Show loading for 2 seconds
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ Processing...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                this.showShippingForm = false;
+                this.showFinalSuccess = true;
+                
+                // Reset form
+                this.shippingData = {
+                    fullName: '',
+                    phone: '',
+                    email: '',
+                    address: '',
+                    pincode: ''
+                };
+            }, 2000);
         },
         
         closeModals() {
