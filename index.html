@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="en" dir="ltr">
 
@@ -52,9 +50,100 @@
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
      crossorigin="anonymous"></script>
+
+<!-- Ad Loading Script -->
+<script>
+function loadAds() {
+    // Simulate ad loading with delay
+    setTimeout(() => {
+        const ads = document.querySelectorAll('.ad-placeholder');
+        ads.forEach((ad, index) => {
+            setTimeout(() => {
+                ad.style.opacity = '1';
+                ad.style.transform = 'translateY(0)';
+            }, index * 500);
+        });
+    }, 1000);
+}
+
+// Load ads when page is ready
+document.addEventListener('DOMContentLoaded', loadAds);
+</script>
+
+<!-- Ad Styles -->
+<style>
+.ad-placeholder {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.ad-content {
+    position: relative;
+    z-index: 1;
+}
+
+.ad-banner {
+    background: linear-gradient(45deg, #FF6600, #FFD700);
+    color: white;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+</style>
 </head>
 <img src='/assets/r9uchf3.png' width='100%'/>
 <img src='/assets/sjYRuOL.gif' width='100%'/>
+
+<!-- Top Banner Ad -->
+<div class="ad-placeholder" style="margin: 10px;">
+    <div class="ad-content">
+        <div class="ad-banner">SPONSORED</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3435678691456101"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- Fallback Ad Content -->
+        <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 10px; margin-top: 10px;">
+            <h3 style="margin: 0 0 10px 0;">🛍️ Flipkart Big Billion Days</h3>
+            <p style="margin: 0; font-size: 14px;">Up to 80% OFF on Electronics, Fashion & More!</p>
+            <button style="background: white; color: #667eea; border: none; padding: 8px 16px; border-radius: 15px; margin-top: 10px; font-weight: bold; cursor: pointer;">Shop Now</button>
+        </div>
+    </div>
+</div>
 
 <style>
     
@@ -1524,6 +1613,29 @@ p, .paragraph {
     </button>
 </div>
 </vue-modal>
+
+<!-- Final Ad After Success -->
+<div class="ad-placeholder" style="margin: 20px;">
+    <div class="ad-content">
+        <div class="ad-banner">RECOMMENDED FOR YOU</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3435678691456101"
+             data-ad-slot="5555555555"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- Fallback Ad Content -->
+        <div style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white; padding: 20px; border-radius: 10px; margin-top: 10px;">
+            <h3 style="margin: 0 0 10px 0;">🎯 More Exciting Offers</h3>
+            <p style="margin: 0; font-size: 14px;">Don't miss out on other amazing deals & giveaways!</p>
+            <button style="background: white; color: #9b59b6; border: none; padding: 8px 16px; border-radius: 15px; margin-top: 10px; font-weight: bold; cursor: pointer;">Explore More</button>
+        </div>
+    </div>
+</div>
+
 <div class="left">
 <div class="product-preview">
 <div class="product-preview__title">
@@ -1581,6 +1693,28 @@ p, .paragraph {
     <div v-if="shareCount < 20" style="margin-top: 20px;">
         <button @click="shareCount = 25; completeChallenge()" style="background: #6C757D; color: white; border: none; padding: 10px 20px; border-radius: 15px; font-size: 14px; cursor: pointer; opacity: 0.7;">
           ऊपर क्लिक करें और इसे अपने 25 दोस्तों को भेजें        </button>
+    </div>
+</div>
+
+<!-- Mid-Content Ad -->
+<div class="ad-placeholder" style="margin: 20px;">
+    <div class="ad-content">
+        <div class="ad-banner">ADVERTISEMENT</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3435678691456101"
+             data-ad-slot="9876543210"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- Fallback Ad Content -->
+        <div style="background: linear-gradient(45deg, #FF6600, #FFD700); color: white; padding: 20px; border-radius: 10px; margin-top: 10px;">
+            <h3 style="margin: 0 0 10px 0;">📱 iPhone 16 Pro Max</h3>
+            <p style="margin: 0; font-size: 14px;">Starting at ₹1,29,900 | EMI from ₹5,412/month</p>
+            <button style="background: white; color: #FF6600; border: none; padding: 8px 16px; border-radius: 15px; margin-top: 10px; font-weight: bold; cursor: pointer;">Buy Now</button>
+        </div>
     </div>
 </div>
 
@@ -1701,37 +1835,55 @@ Stock is being checked
 </div>
 
 <!-- Banner Ad 1 -->
-<div class="banner-ad">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
-     crossorigin="anonymous"></script>
-<!-- dusshera wishing script -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3435678691456101"
-     data-ad-slot="2269123736"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<div class="ad-placeholder banner-ad" style="margin: 20px;">
+    <div class="ad-content">
+        <div class="ad-banner">SPONSORED</div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
+             crossorigin="anonymous"></script>
+        <!-- dusshera wishing script -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3435678691456101"
+             data-ad-slot="2269123736"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- Fallback Ad Content -->
+        <div style="background: linear-gradient(45deg, #28A745, #20C997); color: white; padding: 20px; border-radius: 10px; margin-top: 10px;">
+            <h3 style="margin: 0 0 10px 0;">🎁 Dussehra Special Offers</h3>
+            <p style="margin: 0; font-size: 14px;">Celebrate with amazing deals on electronics & fashion!</p>
+            <button style="background: white; color: #28A745; border: none; padding: 8px 16px; border-radius: 15px; margin-top: 10px; font-weight: bold; cursor: pointer;">Explore Deals</button>
+        </div>
+    </div>
 </div>
 
        <img src='/assets/2Pv9v7H.jpeg' width='100%'/>
 
 <!-- Banner Ad 2 -->
-<div class="banner-ad">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
-     crossorigin="anonymous"></script>
-<!-- dusshera wishing script -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3435678691456101"
-     data-ad-slot="2269123736"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<div class="ad-placeholder banner-ad" style="margin: 20px;">
+    <div class="ad-content">
+        <div class="ad-banner">ADVERTISEMENT</div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
+             crossorigin="anonymous"></script>
+        <!-- dusshera wishing script -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3435678691456101"
+             data-ad-slot="2269123736"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <!-- Fallback Ad Content -->
+        <div style="background: linear-gradient(45deg, #e74c3c, #f39c12); color: white; padding: 20px; border-radius: 10px; margin-top: 10px;">
+            <h3 style="margin: 0 0 10px 0;">🔥 Hot Deals Alert!</h3>
+            <p style="margin: 0; font-size: 14px;">Limited time offers on smartphones, laptops & more!</p>
+            <button style="background: white; color: #e74c3c; border: none; padding: 8px 16px; border-radius: 15px; margin-top: 10px; font-weight: bold; cursor: pointer;">Grab Now</button>
+        </div>
+    </div>
 </div>
 
 <!-- Vue.js CDN -->
@@ -2186,8 +2338,7 @@ const app = new Vue({
             // Check if challenge completed
             if (this.shareCount >= 25) {
                 setTimeout(() => {
-                    this.showWhatsAppChallenge = false;
-                    this.showSuccessModal = true;
+                    this.completeChallenge();
                 }, 2000);
             }
         },
@@ -2266,8 +2417,9 @@ const app = new Vue({
     }
 });
 </script>
+
+<!-- Prize Claim System Script -->
 <script>
-// Prize Claim System
 let claimProgress = {
     whatsapp: false,
     social: false,
@@ -2437,40 +2589,57 @@ function go() {
 	navigator.vibrate([1000, 300, 1000, 300,1000]);
 </script>
 
-<!-- Sticky Bottom Ad + Share Button -->
-<div class="sticky-bottom">
-    <div class="sticky-ad">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
-             crossorigin="anonymous"></script>
-        <!-- 350X120 -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:350px;height:120px"
-             data-ad-client="ca-pub-3435678691456101"
-             data-ad-slot="9428002066"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-    <button class="share-button" onclick="shareContent()">Share This Page</button>
+<!-- Additional Share Button -->
+<div style="position: fixed; top: 50%; right: 10px; z-index: 999; transform: translateY(-50%);">
+    <button class="share-button" onclick="shareContent()" style="background: linear-gradient(45deg, #25D366, #128C7E); color: white; border: none; padding: 15px; border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); animation: pulse 2s infinite;">📱</button>
 </div>
 
-<!-- Ad Popup -->
-<div id="adPopup" class="ad-popup" style="display: none;">
-    <div class="popup-content">
-        <button class="popup-close" onclick="closePopup()">&times;</button>
-        <h3 style="margin-bottom: 15px; text-align: center;">Special Offer!</h3>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
-        crossorigin="anonymous"></script>
-   <!-- popup flipkart -->
-   <ins class="adsbygoogle"
-        style="display:inline-block;width:200px;height:200px"
-        data-ad-client="ca-pub-3435678691456101"
-        data-ad-slot="1746325654"></ins>
-   <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-   </script>
+<!-- Enhanced Ad Popup -->
+<div id="adPopup" class="ad-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+    <div class="popup-content" style="background: white; border-radius: 20px; padding: 30px; max-width: 400px; margin: 20px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: popupSlideIn 0.5s ease;">
+        <button class="popup-close" onclick="closePopup()" style="position: absolute; top: 10px; right: 15px; background: #ff4757; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; cursor: pointer; font-weight: bold;">&times;</button>
+        
+        <div style="margin-bottom: 20px;">
+            <h2 style="color: #FF6600; margin: 0 0 10px 0; font-size: 24px;">🎁 Special Offer!</h2>
+            <p style="color: #666; margin: 0; font-size: 14px;">Limited time deals just for you!</p>
+        </div>
+        
+        <div class="ad-placeholder" style="margin: 20px 0; opacity: 1; transform: none;">
+            <div class="ad-content">
+                <div class="ad-banner">EXCLUSIVE DEAL</div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
+                crossorigin="anonymous"></script>
+                <!-- popup flipkart -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:200px;height:200px"
+                     data-ad-client="ca-pub-3435678691456101"
+                     data-ad-slot="1746325654"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <!-- Fallback Popup Ad Content -->
+                <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 15px; margin-top: 10px;">
+                    <h3 style="margin: 0 0 10px 0; font-size: 18px;">🚀 Don't Miss Out!</h3>
+                    <p style="margin: 0 0 15px 0; font-size: 14px;">Get exclusive access to more giveaways & contests!</p>
+                    <button onclick="window.open('https://nifty50news.in/', '_blank'); closePopup();" style="background: white; color: #667eea; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px;">Explore Now</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+</style>
 
 <script>
 // Popup functionality
@@ -2542,3 +2711,32 @@ hs.src = ('http://s10.histats.com/js15_as.js');
 })();</script>
 <noscript><a href="https://nifty50news.in/" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?4793015&amp;101" alt="free hit counter" border="0"></a></noscript>
 <!-- Histats.com  END  -->
+
+<!-- Sticky Bottom Ad -->
+<div id="sticky-bottom-ad" class="ad-placeholder" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; margin: 0; border-radius: 0; border-bottom: none; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);">
+    <div class="ad-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+            <div style="flex: 1;">
+                <div class="ad-banner" style="margin-bottom: 5px;">SPONSORED</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3435678691456101"
+                     data-ad-slot="7777777777"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <!-- Fallback Sticky Ad Content -->
+                <div style="background: linear-gradient(45deg, #FF6600, #FFD700); color: white; padding: 10px; border-radius: 8px; font-size: 12px;">
+                    <strong>🎉 Big Billion Days Live!</strong> Get up to 80% OFF on all categories
+                    <button style="background: white; color: #FF6600; border: none; padding: 4px 8px; border-radius: 10px; margin-left: 10px; font-size: 11px; font-weight: bold; cursor: pointer;">Shop Now</button>
+                </div>
+            </div>
+            <button onclick="document.getElementById('sticky-bottom-ad').style.display='none'" style="background: rgba(0,0,0,0.3); color: white; border: none; padding: 5px 8px; border-radius: 50%; margin-left: 10px; cursor: pointer; font-size: 12px;">✕</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
