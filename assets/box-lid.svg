@@ -1,0 +1,12 @@
+<svg width="100" height="60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="60" fill="url(#lidGrad)" rx="8"/>
+  <rect x="5" y="5" width="90" height="50" fill="none" stroke="#654321" stroke-width="2" rx="5"/>
+  <circle cx="50" cy="30" r="8" fill="#FFD700"/>
+  <text x="50" y="35" font-family="Arial" font-size="10" fill="#8B4513" text-anchor="middle">GIFT</text>
+</svg>
