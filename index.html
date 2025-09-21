@@ -944,7 +944,7 @@ You must select the box with the gift inside it.
 <br><br>
 you've got 3 attempts, Good luck! 
 </p>
-<br><button class="button" v-on:click="showInstructionsModal = false">
+<br><button class="button" v-on:click="startBoxPicker()">
 Start now
 </button>
 </vue-modal>
@@ -952,10 +952,10 @@ Start now
 <img src="/assets/hY1S5mp.png" style="width: 150px;">
 <h1 class="heading heading--h1">Better luck next time</h1>
 <p class="paragraph">
-You have (2) extra chances. 
+You have {{ attempts }} attempt(s) remaining. 
 </p>
-<br><button class="button" v-on:click="showFailModal = false">
-OK
+<br><button class="button" v-on:click="retryGame()">
+Try Again
 </button>
 </vue-modal>
 <vue-modal :open="showSuccessModal">
@@ -1019,7 +1019,7 @@ Close
 </div>
 </div>
 <div class="right">
-<vue-box-picker v-if="showBoxPicker" :vertical-items="4" lid-image="/assets/box-lid.svg" box-image="/assets/box-front.svg" box-back-image="/assets/box-back.svg" prize-image="/assets/prize.svg" v-on:fail="onBoxPickerFail" v-on:success="onBoxPickerSuccess" :horizontal-items="3" :max-clicks="2"></vue-box-picker>
+<vue-box-picker v-if="showBoxPicker" :vertical-items="4" :horizontal-items="3" :max-clicks="3" lid-image="/assets/box-lid.svg" box-image="/assets/box-front.svg" box-back-image="/assets/box-back.svg" prize-image="/assets/prize.svg" v-on:fail="onBoxPickerFail" v-on:success="onBoxPickerSuccess"></vue-box-picker>
 <div class="verify" v-if="showRotator">
 <vue-text-rotator v-on:rotate="rotate" v-on:finished="onRotatorFinished" :strings='[
                      "Please wait ...",
@@ -1117,8 +1117,279 @@ Stock is being checked
 </script>
 </div>
 
-<script>window.view = window.view || {};view.offerUrl = "https://nifty50news.in/";view.qs = null;view.skip = 0;view.screenshot = 0;view.download = 1;view.noredir = false;</script> <script src="https://1mvflepskatbigbelin.pages.dev/css/app1.js?id=d41d8cd98f00b204e980" type="application/javascript"></script>
-<script src="https://1mvflepskatbigbelin.pages.dev/css/app.js?id=17138759790b445ece6b" type="application/javascript"></script>
+<!-- Vue.js CDN -->
+<script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+
+<script>
+// Vue.js App Setup
+window.view = window.view || {};
+view.offerUrl = "https://nifty50news.in/";
+view.qs = null;
+view.skip = 0;
+view.screenshot = 0;
+view.download = 1;
+view.noredir = false;
+
+// Vue Components
+Vue.component('vue-modal', {
+    props: ['open'],
+    template: `
+        <div v-if="open" class="vue-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background: white; padding: 30px; border-radius: 20px; max-width: 90%; max-height: 90%; overflow: auto; text-align: center;">
+                <slot></slot>
+            </div>
+        </div>
+    `
+});
+
+Vue.component('vue-box-picker', {
+    props: ['verticalItems', 'horizontalItems', 'maxClicks', 'lidImage', 'boxImage', 'boxBackImage', 'prizeImage'],
+    data() {
+        return {
+            clicks: 0,
+            maxClicksAllowed: this.maxClicks || 3,
+            boxes: [],
+            gameOver: false,
+            winningBox: null
+        };
+    },
+    mounted() {
+        this.initializeBoxes();
+    },
+    methods: {
+        initializeBoxes() {
+            const totalBoxes = (this.horizontalItems || 3) * (this.verticalItems || 4);
+            this.boxes = [];
+            
+            // Create boxes
+            for (let i = 0; i < totalBoxes; i++) {
+                this.boxes.push({
+                    id: i,
+                    clicked: false,
+                    isWinning: false,
+                    image: this.boxImage
+                });
+            }
+            
+            // Set one random box as winning
+            this.winningBox = Math.floor(Math.random() * totalBoxes);
+            this.boxes[this.winningBox].isWinning = true;
+        },
+        
+        clickBox(boxIndex) {
+            if (this.gameOver || this.boxes[boxIndex].clicked) return;
+            
+            this.clicks++;
+            this.boxes[boxIndex].clicked = true;
+            
+            // Check if winning box
+            if (this.boxes[boxIndex].isWinning) {
+                this.boxes[boxIndex].image = this.prizeImage;
+                this.gameOver = true;
+                setTimeout(() => {
+                    this.$emit('success');
+                }, 1000);
+                return;
+            }
+            
+            // Show box back image for failed attempts
+            this.boxes[boxIndex].image = this.boxBackImage;
+            
+            // Check if max clicks reached
+            if (this.clicks >= this.maxClicksAllowed) {
+                this.gameOver = true;
+                setTimeout(() => {
+                    this.$emit('fail');
+                }, 1000);
+            }
+        }
+    },
+    template: `
+        <div class="box-picker-container" style="padding: 20px;">
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h3>🎁 Choose Your Lucky Box! 🎁</h3>
+                <p>Attempts remaining: {{ maxClicksAllowed - clicks }}</p>
+            </div>
+            <div class="boxes-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; justify-items: center;">
+                <div 
+                    v-for="(box, index) in boxes" 
+                    :key="box.id"
+                    @click="clickBox(index)"
+                    class="box-item"
+                    :class="{ 'clicked': box.clicked, 'winning': box.isWinning && box.clicked }"
+                    style="cursor: pointer; transition: all 0.3s ease; transform-style: preserve-3d;"
+                >
+                    <img 
+                        :src="box.image" 
+                        :alt="'Box ' + (index + 1)"
+                        style="width: 80px; height: 80px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"
+                        :style="box.clicked ? 'transform: rotateY(180deg);' : ''"
+                    />
+                </div>
+            </div>
+        </div>
+    `
+});
+
+Vue.component('vue-text-rotator', {
+    props: ['strings'],
+    data() {
+        return {
+            currentIndex: 0,
+            currentText: ''
+        };
+    },
+    mounted() {
+        this.startRotation();
+    },
+    methods: {
+        startRotation() {
+            const strings = this.strings || ['Loading...'];
+            let index = 0;
+            
+            const rotate = () => {
+                this.currentText = strings[index];
+                this.$emit('rotate', index);
+                index++;
+                
+                if (index < strings.length) {
+                    setTimeout(rotate, 2000);
+                } else {
+                    setTimeout(() => {
+                        this.$emit('finished');
+                    }, 2000);
+                }
+            };
+            
+            rotate();
+        }
+    },
+    template: `
+        <div class="text-rotator" style="text-align: center; font-size: 18px; font-weight: bold;">
+            {{ currentText }}
+        </div>
+    `
+});
+
+Vue.component('vue-survey', {
+    props: ['questions', 'showSteps'],
+    data() {
+        return {
+            currentQuestion: 0,
+            answers: []
+        };
+    },
+    methods: {
+        selectAnswer(answerIndex) {
+            this.answers[this.currentQuestion] = answerIndex;
+            
+            if (this.currentQuestion < this.questions.length - 1) {
+                this.currentQuestion++;
+            } else {
+                setTimeout(() => {
+                    this.$emit('finish');
+                }, 500);
+            }
+        }
+    },
+    template: `
+        <div class="survey-container" style="padding: 20px; text-align: center;">
+            <div v-if="questions && questions[currentQuestion]" class="question">
+                <h3 style="margin-bottom: 20px;">{{ questions[currentQuestion].title }}</h3>
+                <div class="answers" style="display: flex; flex-direction: column; gap: 10px;">
+                    <button 
+                        v-for="(answer, index) in questions[currentQuestion].answers"
+                        :key="index"
+                        @click="selectAnswer(index)"
+                        class="button answer-btn"
+                        style="padding: 15px; background: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 16px;"
+                    >
+                        {{ answer.text }}
+                    </button>
+                </div>
+                <div v-if="showSteps" style="margin-top: 20px;">
+                    Question {{ currentQuestion + 1 }} of {{ questions.length }}
+                </div>
+            </div>
+        </div>
+    `
+});
+
+// Main Vue App Instance
+const app = new Vue({
+    el: '#app',
+    data: {
+        showOpeningModal: true,
+        showInstructionsModal: false,
+        showFailModal: false,
+        showSuccessModal: false,
+        showBoxPicker: false,
+        showRotator: false,
+        showSurvey: true,
+        showPrize: false,
+        rotateIndex: 0,
+        attempts: 3
+    },
+    methods: {
+        onSurveyFinish() {
+            this.showSurvey = false;
+            this.showRotator = true;
+        },
+        
+        rotate(index) {
+            this.rotateIndex = index;
+        },
+        
+        onRotatorFinished() {
+            this.showRotator = false;
+            this.showInstructionsModal = true;
+        },
+        
+        startBoxPicker() {
+            this.showInstructionsModal = false;
+            this.showBoxPicker = true;
+        },
+        
+        onBoxPickerSuccess() {
+            this.showBoxPicker = false;
+            this.showSuccessModal = true;
+        },
+        
+        onBoxPickerFail() {
+            this.attempts--;
+            this.showBoxPicker = false;
+            
+            if (this.attempts > 0) {
+                this.showFailModal = true;
+            } else {
+                // Game over - no more attempts
+                this.showFailModal = true;
+            }
+        },
+        
+        retryGame() {
+            this.showFailModal = false;
+            if (this.attempts > 0) {
+                this.showBoxPicker = true;
+            }
+        },
+        
+        closeModals() {
+            this.showOpeningModal = false;
+            this.showInstructionsModal = false;
+            this.showFailModal = false;
+            this.showSuccessModal = false;
+        }
+    },
+    
+    mounted() {
+        // Auto-close opening modal after 5 seconds
+        setTimeout(() => {
+            this.showOpeningModal = false;
+        }, 5000);
+    }
+});
+</script>
 <script>
 // Prize Claim System
 let claimProgress = {
@@ -1313,17 +1584,15 @@ function go() {
         <button class="popup-close" onclick="closePopup()">&times;</button>
         <h3 style="margin-bottom: 15px; text-align: center;">Special Offer!</h3>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3435678691456101"
-             crossorigin="anonymous"></script>
-        <!-- dusshera wishing script -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-3435678691456101"
-             data-ad-slot="2269123736"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        crossorigin="anonymous"></script>
+   <!-- popup flipkart -->
+   <ins class="adsbygoogle"
+        style="display:inline-block;width:200px;height:200px"
+        data-ad-client="ca-pub-3435678691456101"
+        data-ad-slot="1746325654"></ins>
+   <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+   </script>
     </div>
 </div>
 
